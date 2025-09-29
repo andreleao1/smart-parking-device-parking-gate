@@ -15,7 +15,9 @@ This project is a Python application designed to manage and control a smart park
 - `src/`: Source code
   - `main.py`: Main logic
   - `gui/`: GUI components
+    - `screen_base.py`: Base screen class
     - `screen_waiting_plate_reading.py`: Plate reading waiting screen
+    - `screen_checkout_successful.py`: Checkout success screen
 - `assets/icons/`: Application icons and images
 - `requirements.txt`: Python dependencies
 
