@@ -1,11 +1,13 @@
 import sys
+
 from PyQt5.QtWidgets import QApplication
-from src.gui.screen_waiting_plate_reading import WaitingScreen
+
+from src.gui.screen_base import BaseScreen
 
 
 def main():
     app = QApplication(sys.argv)
-    window = WaitingScreen()
+    window = BaseScreen()
     window.showMaximized()
     sys.exit(app.exec_())
 
