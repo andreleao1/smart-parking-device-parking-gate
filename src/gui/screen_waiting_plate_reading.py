@@ -1,6 +1,8 @@
 from PyQt5.QtCore import Qt, QDateTime, QTimer
 from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QApplication
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout
+
+from src.services.sensor_thread import SensorThread
 
 
 class WaitingScreen(QWidget):
@@ -63,7 +65,20 @@ class WaitingScreen(QWidget):
         self.timer.start(1000)
         self.update_datetime()
 
+        self.sensor_thread = SensorThread()
+        self.sensor_thread.vehicle_detected.connect(self.on_vehicle_detected)
+        self.sensor_thread.start()
+
     def update_datetime(self):
         now = QDateTime.currentDateTime()
         self.date_label.setText(now.toString("dd/MM/yyyy"))
         self.time_label.setText(now.toString("HH:mm:ss"))
+
+    def on_vehicle_detected(self, distance: float):
+        """Called when a vehicle is detected by the sensor."""
+        print(f"Vehicle detected at distance: {distance} meters")
+
+    def closeEnvent(self, event):
+        """Handle any cleanup before closing the widget."""
+        self.sensor_thread.stop()
+        super().closeEvent(event)
